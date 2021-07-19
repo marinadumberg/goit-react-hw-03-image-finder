@@ -1,5 +1,5 @@
 import React from "react";
-import s from "./ImageGelleryItem.module.css";
+import s from "../ImageGalleryItem/ImageGalleryItem.module.css";
 import PropTypes from "prop-types";
 
 export default function ImageGalleryItem({ webformatURL, tags, openModal }) {
