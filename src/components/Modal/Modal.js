@@ -1,47 +1,49 @@
 import React, { Component, createRef } from "react";
 import { createPortal } from "react-dom";
-import s from "../Modal/Modal.module.css";
-const ModalRoot = document.querySelector("#modal-root");
+import s from "./Modal.module.css";
+
+const modalRoot = document.querySelector("#modal-root");
 
 export default class Modal extends Component {
   backdrop = createRef();
 
   componentDidMount() {
-    window.addEventListener("keydown", this.handleKeyPress);
+    window.addEventListener("keydown", this.handleKeyDown);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyPress);
-  }
-  handleKeyPress = (e) => {
-    if (e.code !== "Escape") {
-      return;
+  handleKeyDown = (e) => {
+    if (e.code === "Escape") {
+      this.props.onClose();
     }
-    this.props.onClose();
   };
 
   handleBackdropClick = (e) => {
-    if (this.backdropRef.current && e.target !== this.backdropRef.current) {
-      return;
-    }
+    // console.log('backdrop');
+    // console.log('currentTarget:', e.currentTarget);
+    // console.log('target:', e.target);
 
-    this.props.onClose();
+    if (e.currentTarget === e.target) {
+      this.props.onClose();
+    }
   };
 
   render() {
     const { image } = this.props;
     return createPortal(
       <div
-        className={s.Overlay}
-        ref={this.backdropRef}
-        onClick={this.props.onClose}
-        role="presentation"
+        className={s.overlay}
+        ref={this.backdrop}
+        onClick={this.handleBackdropClick}
       >
-        <div className={s.Modal}>
+        <div className={s.modal}>
           <img src={image.src} alt={image.alt} />
+          {this.props.children}
         </div>
       </div>,
-      ModalRoot
+      modalRoot
     );
   }
 }

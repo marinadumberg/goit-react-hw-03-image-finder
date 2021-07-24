@@ -7,7 +7,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
-import s from "./App.module.css";
+import s from "../App/App.module.css";
+
 export default class App extends Component {
   state = {
     imageName: "",
@@ -64,6 +65,7 @@ export default class App extends Component {
       selectedImage: { src, alt },
     });
   };
+
   closeModal = () => this.setState({ modalIsOpen: false });
 
   onLoadMore = () => {
