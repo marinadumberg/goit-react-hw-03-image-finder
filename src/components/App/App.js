@@ -36,7 +36,7 @@ export default class App extends Component {
         )
         .catch((error) => this.setState({ error, status: "rejected" }));
     }
-    if (prevState.images !== this.state.images) {
+    if (this.state.page > 1) {
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: "smooth",
